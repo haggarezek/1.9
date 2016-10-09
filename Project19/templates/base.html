@@ -1,0 +1,17 @@
+<!--DOCCTYPE html -->
+
+<html>
+
+<head>
+<title>{% block head_title %} TEST 1.9 {% endblock head_title %}</title>
+<link rel='stylesheet' href='/static/css/base.css' />
+
+</head>
+<body>
+{% include "messages_display.html" }
+<div class='contaniner'>
+{% block content %}
+{% endblock content %}
+</div>
+</body>
+</html>
