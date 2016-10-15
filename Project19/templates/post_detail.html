@@ -2,7 +2,7 @@
 
 {% block head_title %}
  
-{{ instance.title }} | {{ block.super }} 
+{{ instance.title }} {{ block.super }} 
 
 {% endblock head_title %}
 
@@ -11,17 +11,40 @@
 
 
 
-<h1>{{ title }}</h1>
+<body>
+<div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+               
+                <div class="post-preview">
+                    <a href='{{ obj.get_absolute_url }}'>
+                        <h2 class="post-title">
+                           {{ obj.title }}<br/></a>
+                        </h2>
 
+                         
+                            <div class="row">
+                                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                                <p>{{ instance.content | linebreaks | truncatechars:1200}}</p>
+                                    {% if instance.image %}
+                                       <img src='{{ instance.image.url }}' class='img-responsive' />
 
-{{ instance.title }}<br/>
-{{ instance.content }}<br/>
-{{ instance.timestamp }}<br/>
-{{ instance.updated }}<br/>
-{{ instance.id }}<br/>
+                                    {% endif %}
+                        <h3>    
+                            {{ instance.updated }}<br/>
 
+                        </h3>
+                    
+                    <p class="post-meta">Posted by Zeke<a href="#">{{ obj.id }}</a>{{obj.timestamp }}</p>
+            </div>
+        </div>
+    </div>
 
 {% endblock content %}
+
+</div>
+
 </body>
 
 </html>
+

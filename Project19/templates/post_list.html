@@ -3,19 +3,60 @@
 {% block content %}
 
 
-<h1>{{ title }} working</h1>s
-
 {% for obj in object_list %}
 
-{% url "posts:detail" id=obj.id %}
-<a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a><br/>
-{{ obj.content }}<br/>
-{{obj.timestamp }}<br/>
-{{ obj.update }}<br/>
-{{ obj.id }}<br/>
+
+
+<body>
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+			<div class="post-preview">
+                <a href='{{ obj.get_absolute_url }}'>
+                    <h2 class="post-title">
+                        
+                        {{ obj.title }}<br/></a>
+                        
+                    </h2>
+                    <h3 class="post_detail">
+
+                        <p>{{ obj.content | linebreaks | truncatechars:120}}</p>
+
+                        {{ instance.updated }}<br/>
+			    		{{ instance.id }}<br/>
+                    </h3>
+                    
+                    <p class="post-meta">Posted by <a href="#">{{ obj.id }} </a>{{obj.timestamp }}</p>
+        </div>
+    </div>
+</div>
+
+<hr/>
+
+</div>
 
 {% endfor %}
 
+<div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?page={{ object_list.previous_page_number }}">previous</a>
+        {% endif %}
 
+        <span class="current">
+            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+            <a href="?page={{ object_list.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+</body>
+
+</html>
 
 {% endblock content %}
