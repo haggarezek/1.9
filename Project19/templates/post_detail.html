@@ -10,6 +10,24 @@
 {% block content %}
 
 
+{% load staticfiles %}
+
+
+
+<header class="intro-header" style="background-image: url('{% static "img/post-bg.jpg" %}')" no-repeat center center fixed;>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1> {{ instance.title }} </h1>
+                    <hr class="small">
+                    <span class="subheading">HARD CODE NEEDS TO BE ADJUSTED</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
 
 <body>
 <div class="container">
@@ -21,24 +39,31 @@
                         <h2 class="post-title">
                            {{ obj.title }}<br/></a>
                         </h2>
-
+                                <p class="post-meta">Posted by {{ instance.user.get_full_name }}
+                                </p>
                          
-                            <div class="row">
+                                <div class="row">
                                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                                <p>{{ instance.content | linebreaks | truncatechars:1200}}</p>
+
+                                    <div class='content-markdown'><p>{{ instance.content | truncatechars:1200}}</p></div>
+                                
                                     {% if instance.image %}
                                        <img src='{{ instance.image.url }}' class='img-responsive' />
-
-                                    {% endif %}
-                        <h3>    
-                            {{ instance.updated }}<br/>
-
-                        </h3>
-                    
-                    <p class="post-meta">Posted by Zeke<a href="#">{{ obj.id }}</a>{{obj.timestamp }}</p>
+                                     {% endif %}   
+                                    
+                                <h3>    
+                                <p>{% if instance.draft %}<span style='color:red;'>Draft</span> {% endif %}<b>{{ instance.publish }}</b></small></p><br/>
+                                </h3>
+                                       
+                             
+                             
+                           
+                                </div>
+                                </div>
+                </div>
             </div>
         </div>
-    </div>
+
 
 {% endblock content %}
 

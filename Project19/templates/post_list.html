@@ -1,10 +1,47 @@
+<!--DOCCTYPE html -->
+
+
 {% extends "base.html" %}
 
 {% block content %}
 
+{% load staticfiles %}
+
+
+
+<header class="intro-header" style="background-image: url('{% static "img/Container.jpg" %}')" no-repeat center center fixed;>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>OurBar</h1>
+                    <hr class="small">
+                    <span class="subheading">
+
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <span>
+            <form method='GET' action=''>
+            <input type='text' name='q' placeholder='Search posts' value='{{ request.GET.q }}'/>
+
+            <input type='submit' value='Search' />
+            </form>
+            </span>
+        </div>
+    </div>
+</div>
+
 
 {% for obj in object_list %}
-
 
 
 <body>
@@ -17,18 +54,24 @@
                 <a href='{{ obj.get_absolute_url }}'>
                     <h2 class="post-title">
                         
-                        {{ obj.title }}<br/></a>
+                        {{ obj.title }}<br/>
                         
                     </h2>
                     <h3 class="post_detail">
 
-                        <p>{{ obj.content | linebreaks | truncatechars:120}}</p>
-
-                        {{ instance.updated }}<br/>
-			    		{{ instance.id }}<br/>
+                        <small><p><div class='content-markdown'>{{ obj.content | truncatechars:120}}</div></p>
+                        </small>
+    
                     </h3>
+                        
+                        {% if obj.user.get_full_name %}
+                        <p class="post-meta">
+                        
+                         
+                        {{ instance.user.get_full_name }}
+                        {% endif %}
+                        <small> {{ obj.publish }}</small></p>
                     
-                    <p class="post-meta">Posted by <a href="#">{{ obj.id }} </a>{{obj.timestamp }}</p>
         </div>
     </div>
 </div>
@@ -39,21 +82,21 @@
 
 {% endfor %}
 
-<div class="pagination">
-    <span class="step-links">
-        {% if object_list.has_previous %}
-            <a href="?page={{ object_list.previous_page_number }}">previous</a>
-        {% endif %}
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if object_list.has_previous %}
+                               <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
+                            {% endif %}
 
-        <span class="current">
-            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
-        </span>
+                            <span class="current">
+                                Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+                            </span>
 
-        {% if object_list.has_next %}
-            <a href="?page={{ object_list.next_page_number }}">next</a>
-        {% endif %}
-    </span>
-</div>
+                            {% if object_list.has_next %}
+                                <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
+                            {% endif %}
+                        </span>
+                    </div>
 
 </body>
 
